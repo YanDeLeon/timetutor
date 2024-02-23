@@ -3,25 +3,31 @@ package main
 import (
 	"fmt"
 
+	"github.com/leapkit/core/assets"
 	"github.com/leapkit/core/db"
-	"github.com/timetutor/internal/app/config"
-	"github.com/timetutor/internal/app/postgres"
-	"github.com/timetutor/internal/app/postgres/migrations"
-
+	"github.com/YanDeLeon/timetutor/internal"
+	"github.com/YanDeLeon/timetutor/internal/migrations"
 	"github.com/paganotoni/tailo"
-
-	_ "github.com/lib/pq"
 )
 
 func main() {
-	err := tailo.Setup()
+	// Setup public folder.
+	err := assets.Embed(internal.AssetsFolder, internal.PublicFolder)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("✅ Public folder Generated")
+
+	// Setup tailo to compile tailwind css.
+	err = tailo.Setup()
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	fmt.Println("✅ Tailwind CSS setup successfully")
 
-	err = db.Create(config.DatabaseURL)
+	err = db.Create(internal.DatabaseURL)
 	if err != nil {
 		fmt.Println(err)
 
@@ -30,7 +36,7 @@ func main() {
 
 	fmt.Println("✅ Database created successfully")
 
-	conn, err := postgres.Connection()
+	conn, err := internal.Connection()
 	if err != nil {
 		fmt.Println(err)
 		return

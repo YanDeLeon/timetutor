@@ -5,15 +5,13 @@ import (
 	"os"
 
 	"github.com/leapkit/core/server"
-	"github.com/timetutor/internal/app"
+	"github.com/YanDeLeon/timetutor/internal"
 )
 
 func main() {
-	s := server.New(
-		"LeapKit",
-	)
+	s := server.New("LeapKit")
 
-	if err := app.AddRoutes(s); err != nil {
+	if err := internal.AddRoutes(s); err != nil {
 		os.Exit(1)
 	}
 

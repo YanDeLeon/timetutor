@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"github.com/leapkit/core/gloves"
-	"github.com/timetutor/internal/app/config"
+	"github.com/YanDeLeon/timetutor/internal"
 )
 
 func main() {
 	err := gloves.Start(
 		"cmd/app/main.go",
 
-		config.GlovesOptions...,
+		internal.GlovesOptions...,
 	)
 
 	if err != nil {

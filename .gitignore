@@ -1,2 +1,4 @@
 internal/web/public/application.css
 bin/*
+public/*.(css,js)
+timetutor.db

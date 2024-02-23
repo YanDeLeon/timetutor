@@ -5,11 +5,8 @@ import (
 	"os"
 
 	"github.com/leapkit/core/db"
-	"github.com/timetutor/internal/app/config"
-	"github.com/timetutor/internal/app/postgres"
-	"github.com/timetutor/internal/app/postgres/migrations"
-
-	_ "github.com/lib/pq"
+	"github.com/YanDeLeon/timetutor/internal"
+	"github.com/YanDeLeon/timetutor/internal/migrations"
 )
 
 func main() {
@@ -25,7 +22,7 @@ func main() {
 
 	switch os.Args[1] {
 	case "migrate":
-		conn, err := postgres.Connection()
+		conn, err := internal.Connection()
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -40,7 +37,7 @@ func main() {
 
 		fmt.Println("✅ Migrations ran successfully")
 	case "create":
-		err := db.Create(config.DatabaseURL)
+		err := db.Create(internal.DatabaseURL)
 		if err != nil {
 			fmt.Println(err)
 
@@ -50,7 +47,7 @@ func main() {
 		fmt.Println("✅ Database created successfully")
 
 	case "drop":
-		err := db.Drop(config.DatabaseURL)
+		err := db.Drop(internal.DatabaseURL)
 		if err != nil {
 			fmt.Println(err)
 
